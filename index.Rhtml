@@ -1,0 +1,81 @@
+<!--begin.rcode init,echo=FALSE,result="hide"
+# build("./rqgismapping/index.Rhtml", "./templatr/inst/templates/pres1/","index.html",title="Mapping in R and QGIS")
+knitr::opts_chunk$set(comment=NA, prompt=TRUE, dev="CairoPNG", cache=TRUE)
+knitr::opts_knit$set(root.dir=wd)
+op = options()$continue
+options(continue=" ")
+grDevices::X11.options(type='cairo')
+library(readr)
+library(lubridate)
+library(stringr)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(ggvis)
+library(rvest)
+library(testthat)
+library(devtools)
+library(testthat)
+library(magrittr)
+set.seed(310366)
+end.rcode-->
+
+<style>
+span.language { font-weight: bold}
+</style>
+
+<div class="slide" id="title">
+<h1>Mapping in R and QGIS</h1>
+<h2>Barry Rowlingson</h2>
+<h2><code>@geospacedman</code></h2>
+<h3>Lancaster University</h3>
+<p style="font-size: 40%">[next slide=right arrow, prev slide=left arrow, or click slide counter top-right for index]</p>
+</div>
+
+<div class="slide">
+<h1>What is a map?</h1>
+</div>
+
+<div class="slide">
+<h1>Early Days</h1>
+<h2><code>splancs</code></h2>
+<h2><code>maps</code></h2>
+</div>
+
+<div class="slide">
+<h1>Base graphics</h1>
+<h2><code>plot</code>, <code>points</code>, <code>lines</code></h2>
+<h2><code>image</code></h2>
+</div>
+
+<div class="slide">
+<h1>Base graphics extended</h1>
+<!-- TODO search for image and image.plot on rdocumentation -->
+<h2><code>image</code> goes walkabout</h2>
+<h2><code>image.plot</code></h2>
+</div>
+
+<div class="slide">
+<h1>Grid Graphics</h1>
+
+</div>
+
+<div class="slide">
+<h1>The <code>lattice</code> package</h1>
+<!-- show incompatibility with base -->
+</div>
+
+<div class="slide">
+<h1>The <code>ggplot2</code> package</h1>
+</div>
+
+<div class="slide">
+<h1><code>sp</code> objects</h1>
+<h2><code>spplot</code></h2>
+
+</div>
+
+<!--begin.rcode endit,echo=FALSE,result="hide", cache=FALSE
+#save(list=c("bps","bpd","bpd2","bps2"),file="/tmp/run.RData")
+options(continue=op)
+end.rcode-->
