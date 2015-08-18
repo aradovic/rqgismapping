@@ -246,6 +246,7 @@ end.rcode-->
 <!--begin.rcode rasterbonus
 croatia = getData("GADM", country="Croatia",level=1)
 croatia_dem= getData("alt", country="Croatia")
+croatia$mean_alt = extract(croatia_dem, croatia, fun=mean, na.rm=TRUE)
 plot(croatia)
 end.rcode-->
 </div>

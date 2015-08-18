@@ -102,44 +102,255 @@ span.language { font-weight: bold}
 
 <div class="slide">
 <h1>What is a map?</h1>
+<h2>Is it this?</h2>
+<img class="mainpic half" src="images/oldworldmap.jpg" />
+<h2>Or this?</h2>
+<img class="mainpic half" src="images/oldskymap.jpg" />
+<h2>Or this?</h2>
+<img class="mainpic half" src="images/am-map.jpg" />
+<span class="copyright">&copy; Martin Wallace Games</span>
+<img class="mainpic half" src="images/cartogram-map.png" />
+<span class="copyright"><a href="https://commons.wikimedia.org/wiki/File:Cartlinearlarge.png#/media/File:Cartlinearlarge.png">"Cartlinearlarge" by M. E. J. Newman. Licensed under CC BY 2.0 via Commons</a>
+</span>
+</div>
+
+<div class="slide">
+<h1>Let's Ask A Philosopher</h1>
+</div>
+
+<div class="slide">
+<h1>Let's Ask A Mathematician</h1>
+<blockquote>
+[wikipedia]</br>
+In mathematics, the term mapping, usually shortened to map, refers to either
+<ul>
+<li>A function, often with some sort of special structure</li>
+<li>A morphism in category theory, which generalizes the idea of a function.</li>
+</ul>
+</blockquote>
+<h2>These are maps:</h2>
+<img class="mainpic" src="images/color_map.png" />
+<img class="mainpic" src="images/mapping1.png" />
+<h2>This isn't a map:</h2>
+<img class="mainpic" src="images/not-a-mapping.png" />
+</div>
+
+<div class="slide">
+<h1>How Does That Relate To Geography?</h1>
+<h2>All Geographic Maps In One Diagram Ever</h2>
+<img class="mainpic" src="images/conceptmap.png" />
 </div>
 
 <div class="slide">
 <h1>Early Days</h1>
 <h2><code>splancs</code></h2>
+<p>A very early package for point pattern analysis...</p>
+<div class="chunk" id="splancsmaps"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">library</span><span class="hl std">(splancs)</span>
+<span class="hl std">&gt; </span><span class="hl std">calpoly</span> <span class="hl kwb">=</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;./data/calipoly.csv&quot;</span><span class="hl std">)[,</span><span class="hl num">2</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">]</span>
+<span class="hl std">&gt; </span><span class="hl kwd">head</span><span class="hl std">(calpoly)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">        V1       V2
+1 18.37693 42.45583
+2 17.58827 42.61368
+3 17.16765 42.71891
+4 16.91528 42.66630
+5 16.65239 42.79258
+6 16.54723 42.96095
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">cali</span> <span class="hl kwb">=</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;./data/calibration.csv&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">head</span><span class="hl std">(cali[,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">6</span><span class="hl std">])</span>
+</pre></div>
+<div class="output"><pre class="knitr r">  rdb_id lonWGS84 latWGS84 altitude_m       date precip_mm
+1      1 17.20026 45.88358        262   5/2/2009       0.0
+2      1 17.20026 45.88358        262  1/18/2008       0.1
+3      1 17.20026 45.88358        262  3/15/2008       0.0
+4      1 17.20026 45.88358        262  8/25/2009       0.0
+5      1 17.20026 45.88358        262   6/1/2008       0.0
+6      1 17.20026 45.88358        262 11/22/2010       3.8
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">calipts</span> <span class="hl kwb">=</span> <span class="hl std">cali[,</span><span class="hl num">2</span><span class="hl opt">:</span><span class="hl num">3</span><span class="hl std">]</span>
+<span class="hl std">&gt; </span><span class="hl kwd">polymap</span><span class="hl std">(calpoly)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">pointmap</span><span class="hl std">(calipts,</span> <span class="hl kwc">add</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/splancsmaps-1.png" title="plot of chunk splancsmaps" alt="plot of chunk splancsmaps" class="plot" /></div></div>
+<p>Note it <em>preserves the aspect ratio</em> which is the wrong thing to do 
+for lat-long coordinates.</p>
+
 <h2><code>maps</code></h2>
+<p>The <code>maps</code> package came from similar S-plus packages.</p>
+<ul>
+<li>Bundled with a world map database</li>
+<li>Custom binary data format</li>
+<li>Can build new binary data from coordinate files and build tools</li>
+</ul>
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">map</span><span class="hl std">(</span><span class="hl str">&quot;world&quot;</span><span class="hl std">,</span><span class="hl str">&quot;Croatia&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">Error in map.poly(database, regions, exact, xlim, ylim, boundary, interior, : no recognized region names
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">map</span><span class="hl std">(</span><span class="hl str">&quot;world&quot;</span><span class="hl std">,</span><span class="hl str">&quot;Yugoslavia&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">points</span><span class="hl std">(calipts)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/unnamed-chunk-1-1.png" title="plot of chunk unnamed-chunk-1" alt="plot of chunk unnamed-chunk-1" class="plot" /></div></div>
+<ul>
+<li>But nobody seems to have done that recently...</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>Base graphics</h1>
+<h2>Base basics</h2>
+<ul>
+<li>A plot area of a given physical size (inches x inches)</li>
+<li>Physical coordinates mapped to device coordinates</li>
+<li>Device coordinates mapped to plot coordinates for graphs</li>
+<li>Drawing model is pens on paper</li>
+<li>Can always add ink over ink</li>
+</ul>
 <h2><code>plot</code>, <code>points</code>, <code>lines</code></h2>
+<div class="chunk" id="basicsbase"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">plot</span><span class="hl std">(calipts,</span> <span class="hl kwc">asp</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly,</span><span class="hl kwc">border</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl kwc">lwd</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">h</span><span class="hl std">=</span><span class="hl num">44</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/basicsbase-1.png" title="plot of chunk basicsbase" alt="plot of chunk basicsbase" class="plot" /></div></div>
 <h2><code>image</code></h2>
+<p>The first signs of raster data in R</p>
+<div class="chunk" id="ksmooooth"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">ksmooth</span> <span class="hl kwb">=</span> <span class="hl kwd">kernel2d</span><span class="hl std">(</span><span class="hl kwd">as.matrix</span><span class="hl std">(calipts),</span> <span class="hl kwd">as.matrix</span><span class="hl std">(calpoly),</span> <span class="hl num">.4</span><span class="hl std">,</span> <span class="hl kwc">nx</span><span class="hl std">=</span><span class="hl num">100</span><span class="hl std">,</span> <span class="hl kwc">ny</span><span class="hl std">=</span><span class="hl num">100</span><span class="hl std">)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">Xrange is  13.58187 19.1761 
+Yrange is  42.45583 46.60199 
+Doing quartic kernel
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">polymap</span><span class="hl std">(calpoly)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">image</span><span class="hl std">(ksmooth,</span> <span class="hl kwc">add</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span>
+<span class="hl std">&gt; </span><span class="hl kwd">points</span><span class="hl std">(calipts,</span> <span class="hl kwc">pch</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/ksmooooth-1.png" title="plot of chunk ksmooooth" alt="plot of chunk ksmooooth" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1>Base graphics extended</h1>
 <!-- TODO search for image and image.plot on rdocumentation -->
 <h2><code>image</code> goes walkabout</h2>
+<img class="mainpic" src="images/image-search.png" />
 <h2><code>image.plot</code></h2>
+<img class="mainpic" src="images/image.plot-search.png" />
+<h3>Let's try one from <code>fields</code></h3>
+<div class="chunk" id="fieldsplot"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">fields</span><span class="hl opt">::</span><span class="hl kwd">image.plot</span><span class="hl std">(ksmooth)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">points</span><span class="hl std">(calipts,</span> <span class="hl kwc">pch</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/fieldsplot-1.png" title="plot of chunk fieldsplot" alt="plot of chunk fieldsplot" class="plot" /></div></div>
+<h2>How about <code>filled.contour</code>?</h2>
+<div class="chunk" id="filledcontour"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">filled.contour</span><span class="hl std">(ksmooth)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/filledcontour-1.png" title="plot of chunk filledcontour" alt="plot of chunk filledcontour" class="plot" /></div></div>
+
+<h2>How about <code>levelplot</code>?</h2>
+<div class="chunk" id="levelplottry"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">lattice</span><span class="hl opt">::</span><span class="hl kwd">levelplot</span><span class="hl std">(ksmooth</span><span class="hl opt">$</span><span class="hl std">z)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/levelplottry-1.png" title="plot of chunk levelplottry" alt="plot of chunk levelplottry" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">Error in polygon(calpoly): plot.new has not been called yet
+</pre></div>
+</div></div>
+
+<h2>You just discovered <code>grid</code> graphics...</h2>
+
 </div>
 
 <div class="slide">
 <h1>Grid Graphics</h1>
-
+<h2>A Whole New Graphics System</h2>
+<ul>
+<li>Everything You Know Is Wrong</li>
+<li>Don't Cross The (Graphics) Streams</li>
+<li>An <em>Object-Oriented Drawing</em> system, not a <em>charting</em> system</li>
+</ul>
+<h2>Concepts</h2>
+<ul>
+<li>Viewports</li>
+<li>Grobs</li>
+<li>Layouts</li>
+<li>Transformations</li>
+</ul>
+<div class="chunk" id="gridexample"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">library</span><span class="hl std">(grid)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.rect</span><span class="hl std">(</span><span class="hl kwc">gp</span> <span class="hl std">=</span> <span class="hl kwd">gpar</span><span class="hl std">(</span><span class="hl kwc">lty</span> <span class="hl std">=</span> <span class="hl str">&quot;dashed&quot;</span><span class="hl std">))</span>
+<span class="hl std">&gt; </span><span class="hl std">vp1</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">viewport</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl kwc">w</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl kwc">h</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span>
+<span class="hl std"> </span>                <span class="hl kwc">just</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;left&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;bottom&quot;</span><span class="hl std">),</span> <span class="hl kwc">name</span> <span class="hl std">=</span> <span class="hl str">&quot;vp1&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">vp2</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">viewport</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">0</span><span class="hl std">,</span> <span class="hl kwc">w</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span> <span class="hl kwc">h</span> <span class="hl std">=</span> <span class="hl num">0.5</span><span class="hl std">,</span>
+<span class="hl std"> </span>                <span class="hl kwc">just</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;left&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;bottom&quot;</span><span class="hl std">))</span>
+<span class="hl std">&gt; </span><span class="hl kwd">pushViewport</span><span class="hl std">(vp1)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.rect</span><span class="hl std">(</span><span class="hl kwc">gp</span> <span class="hl std">=</span> <span class="hl kwd">gpar</span><span class="hl std">(</span><span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;grey&quot;</span><span class="hl std">))</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.text</span><span class="hl std">(</span><span class="hl str">&quot;Some drawing in graphics region 1&quot;</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">0.8</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">upViewport</span><span class="hl std">()</span>
+<span class="hl std">&gt; </span><span class="hl kwd">pushViewport</span><span class="hl std">(vp2)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.rect</span><span class="hl std">(</span><span class="hl kwc">gp</span> <span class="hl std">=</span> <span class="hl kwd">gpar</span><span class="hl std">(</span><span class="hl kwc">col</span> <span class="hl std">=</span> <span class="hl str">&quot;grey&quot;</span><span class="hl std">))</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.text</span><span class="hl std">(</span><span class="hl str">&quot;Some drawing in graphics region 2&quot;</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">0.8</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">upViewport</span><span class="hl std">()</span>
+<span class="hl std">&gt; </span><span class="hl kwd">downViewport</span><span class="hl std">(</span><span class="hl str">&quot;vp1&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">grid.text</span><span class="hl std">(</span><span class="hl str">&quot;MORE drawing in graphics region 1&quot;</span><span class="hl std">,</span> <span class="hl kwc">y</span> <span class="hl std">=</span> <span class="hl num">0.2</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">popViewport</span><span class="hl std">()</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/gridexample-1.png" title="plot of chunk gridexample" alt="plot of chunk gridexample" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1>The <code>lattice</code> package</h1>
 <!-- show incompatibility with base -->
+<div class="chunk" id="latticeexamples"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">library</span><span class="hl std">(lattice)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">xyplot</span><span class="hl std">(altitude_m</span> <span class="hl opt">~</span> <span class="hl std">precip_mm</span><span class="hl opt">|</span><span class="hl std">precip_type,</span> <span class="hl kwc">data</span><span class="hl std">=cali)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/latticeexamples-1.png" title="plot of chunk latticeexamples" alt="plot of chunk latticeexamples" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">histogram</span><span class="hl std">(</span><span class="hl opt">~</span><span class="hl std">precip_mm</span><span class="hl opt">|</span><span class="hl std">precip_type,</span> <span class="hl kwc">data</span><span class="hl std">=cali)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/latticeexamples-2.png" title="plot of chunk latticeexamples" alt="plot of chunk latticeexamples" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1><code>sp</code> objects</h1>
+<div class="chunk" id="makesps"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">coordinates</span><span class="hl std">(cali)</span><span class="hl kwb">=</span><span class="hl opt">~</span><span class="hl std">lonWGS84</span><span class="hl opt">+</span><span class="hl std">latWGS84</span>
+<span class="hl std">&gt; </span><span class="hl kwd">proj4string</span><span class="hl std">(cali)</span><span class="hl kwb">=</span><span class="hl kwd">CRS</span><span class="hl std">(</span><span class="hl str">&quot;+init=epsg:4326&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">plot</span><span class="hl std">(cali)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">axis</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">);</span><span class="hl kwd">axis</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">h</span><span class="hl std">=</span><span class="hl num">44</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">);</span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">v</span><span class="hl std">=</span><span class="hl num">16</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/makesps-1.png" title="plot of chunk makesps" alt="plot of chunk makesps" class="plot" /></div></div>
 <h2><code>spplot</code></h2>
+<div class="chunk" id="spplotexample"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">spplot</span><span class="hl std">(</span><span class="hl kwd">subset</span><span class="hl std">(cali,precip_mm</span><span class="hl opt">&gt;</span><span class="hl num">10</span><span class="hl std">),</span><span class="hl str">&quot;precip_mm&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/spplotexample-1.png" title="plot of chunk spplotexample" alt="plot of chunk spplotexample" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">axis</span><span class="hl std">(</span><span class="hl num">1</span><span class="hl std">);</span><span class="hl kwd">axis</span><span class="hl std">(</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">Error in axis(1): plot.new has not been called yet
+</pre></div>
+<div class="error"><pre class="knitr r">Error in axis(2): plot.new has not been called yet
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">v</span><span class="hl std">=</span><span class="hl num">16</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">h</span><span class="hl std">=</span><span class="hl num">44</span><span class="hl std">)</span>
+</pre></div>
+<div class="error"><pre class="knitr r">Error in int_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet
+</pre></div>
+</div></div>
+
+<img class="mainpic" src="images/spfail.png" />
+
 </div>
 
 <div class="slide">
 <h1><code>raster</code> package</h1>
+<div class="chunk" id="makeraster"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">rsmooth</span> <span class="hl kwb">=</span> <span class="hl kwd">raster</span><span class="hl std">(ksmooth)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">plot</span><span class="hl std">(rsmooth)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly,</span><span class="hl kwc">border</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl kwc">lwd</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">v</span><span class="hl std">=</span><span class="hl num">16</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">h</span><span class="hl std">=</span><span class="hl num">44</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/makeraster-1.png" title="plot of chunk makeraster" alt="plot of chunk makeraster" class="plot" /></div></div>
 </div>
 
 <div class="slide">
@@ -179,12 +390,20 @@ span.language { font-weight: bold}
 
 <div class="slide">
 <h1>QGIS data</h1>
+<h2>Vector</h2>
+<h2>Raster</h2>
+<h2>Database</h2>
+<h2>Web Services</h2>
 </div>
 
 <div class="slide">
 <h1>Styling</h1>
 <h2>Vector</h2>
 <h2>Raster</h2>
+</div>
+
+<div class="slide">
+<h1>Labelling</h1>
 </div>
 
 <div class="slide">
@@ -197,6 +416,10 @@ span.language { font-weight: bold}
 
 <div class="slide">
 <h1>Map Composer</h1>
+</div>
+
+<div class="slide">
+<h1>Automation</h1>
 </div>
 
 <div class="slide">
