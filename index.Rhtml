@@ -83,7 +83,8 @@ In mathematics, the term mapping, usually shortened to map, refers to either
 library(splancs)
 calpoly = read.csv("./data/calipoly.csv")[,2:3]
 head(calpoly)
-cali = read.csv("./data/calibration.csv")
+cali_data = read.csv("./data/calibration.csv")
+cali = cali_data
 head(cali[,1:6])
 calipts = cali[,2:3]
 polymap(calpoly)
@@ -246,51 +247,112 @@ end.rcode-->
 <!--begin.rcode rasterbonus
 croatia = getData("GADM", country="Croatia",level=1)
 croatia_dem= getData("alt", country="Croatia")
-plot(croatia)
+croatia$mean_alt = extract(croatia_dem, croatia, fun=mean, na.rm=TRUE)[,1]
+spplot(croatia,"mean_alt")
 end.rcode-->
 </div>
 
 <div class="slide">
 <h1>The <code>ggplot2</code> package</h1>
+<h2>A different type of mapping...</h2>
+<img class="mainpic" src="images/ggplotmapping.png" />
+<!--begin.rcode ggplot1
+ggplot(cali_data, aes(x=lonWGS84, y=latWGS84, col=precip_mm)) + geom_point()
+levels(cali_data$precip_type) = substr(levels(cali_data$precip_type),1,13)
+ggplot(cali_data, aes(x=lonWGS84, y=latWGS84, col=precip_type)) + geom_point() + coord_fixed()
+end.rcode-->
 </div>
 
 <div class="slide">
 <h1>OSM backgrounds</h1>
+<h2>Waaay back</h2>
+<img class="mainpic" src="images/webmaps.png" />
+<ul>
+<li>Used <code>OpenLayers</code> web mapping system</li>
+<li>Used OpenStreetMap Background Layers</li>
+<li>Points, Lines, Polys, Rasters</li>
+<li>Nobody used it</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1><code>ggmap</code></h1>
+<!--begin.rcode ggmaptime
+ggmap(get_map("Croatia", zoom=6)) + geom_point(data=cali_data, aes(x=lonWGS84, y=latWGS84))
+end.rcode-->
 </div>
 
 <div class="slide">
 <h1>More <em>neo-geography</em></h1>
 <!-- geoJSON? web APIs? -->
-</div>
-
-<div class="slide">
-<h1>KML and Google Earth</h1>
+<h2>A whole bunch of things</h2>
+<ul>
+<li>Web Mapping</li>
+<li>VGI</li>
+<li>APIs</li>
+<li>GeoJSON</li>
+<li>KML and Google Earth</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>OpenStreetMap data</h1>
+<ul>
+<li>The <code>osmar</code> package</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>To the web!</h1>
 <h2>OpenLayers and Leaflet</h2>
+<ul>
+<li>The <code>leaflet</code> package</li>
+<li>The <code>leafletR</code> package</li>
+<li>Tim's web mapping package as seen yesterday</li>
 </div>
 
 
 <div class="slide">
+<h1>Data Conversion</h1>
+<!--begin.rcode
+raster::shapefile(cali, filename="./data/cali.shp", overwrite=TRUE)
+raster::shapefile(croatia, filename="./data/croatia.shp", overwrite=TRUE) 
+raster::writeRaster(rsmooth, filename="./data/rsmooth.tif", overwrite=TRUE)
+raster::writeRaster(croatia_dem, filename="./data/croatia_dem.tif", overwrite=TRUE)
+end.rcode-->
+</div>
+
+<div class="slide">
 <h1>QGIS outline</h1>
+<ul>
+<li>A user friendly desktop GIS</li>
+<li>Open source cross-platform alternative to expensive proprietary systems</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>QGIS data</h1>
 <h2>Vector</h2>
+<ul>
+<li>All the OGR sources</li>
+<li>CSV files</li>
+</ul>
 <h2>Raster</h2>
+<ul>
+<li>All the GDAL sources</li>
+</ul>
 <h2>Database</h2>
+<ul>
+<li>PostGIS servers</li>
+<li>SpatiaLite files</li>
+<li>Oracle Spatial (I think)</li>
+</ul>
 <h2>Web Services</h2>
+<ul>
+<li>WMS</li>
+<li>WFC</li>
+<li>etc</li>
+</ul>
 </div>
 
 <div class="slide">

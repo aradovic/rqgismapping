@@ -157,7 +157,8 @@ In mathematics, the term mapping, usually shortened to map, refers to either
 5 16.65239 42.79258
 6 16.54723 42.96095
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">cali</span> <span class="hl kwb">=</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;./data/calibration.csv&quot;</span><span class="hl std">)</span>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">cali_data</span> <span class="hl kwb">=</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;./data/calibration.csv&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">cali</span> <span class="hl kwb">=</span> <span class="hl std">cali_data</span>
 <span class="hl std">&gt; </span><span class="hl kwd">head</span><span class="hl std">(cali[,</span><span class="hl num">1</span><span class="hl opt">:</span><span class="hl num">6</span><span class="hl std">])</span>
 </pre></div>
 <div class="output"><pre class="knitr r">  rdb_id lonWGS84 latWGS84 altitude_m       date precip_mm
@@ -344,6 +345,7 @@ Doing quartic kernel
 
 <div class="slide">
 <h1><code>raster</code> package</h1>
+<h2>Plotting</h2>
 <div class="chunk" id="makeraster"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">rsmooth</span> <span class="hl kwb">=</span> <span class="hl kwd">raster</span><span class="hl std">(ksmooth)</span>
 <span class="hl std">&gt; </span><span class="hl kwd">plot</span><span class="hl std">(rsmooth)</span>
 <span class="hl std">&gt; </span><span class="hl kwd">polygon</span><span class="hl std">(calpoly,</span><span class="hl kwc">border</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">,</span><span class="hl kwc">lwd</span><span class="hl std">=</span><span class="hl num">3</span><span class="hl std">)</span>
@@ -351,49 +353,124 @@ Doing quartic kernel
 <span class="hl std">&gt; </span><span class="hl kwd">abline</span><span class="hl std">(</span><span class="hl kwc">h</span><span class="hl std">=</span><span class="hl num">44</span><span class="hl std">,</span> <span class="hl kwc">lty</span><span class="hl std">=</span><span class="hl num">2</span><span class="hl std">)</span>
 </pre></div>
 </div><div class="rimage default"><img src="figure/makeraster-1.png" title="plot of chunk makeraster" alt="plot of chunk makeraster" class="plot" /></div></div>
+<h2>Bonus</h2>
+<div class="chunk" id="rasterbonus"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">croatia</span> <span class="hl kwb">=</span> <span class="hl kwd">getData</span><span class="hl std">(</span><span class="hl str">&quot;GADM&quot;</span><span class="hl std">,</span> <span class="hl kwc">country</span><span class="hl std">=</span><span class="hl str">&quot;Croatia&quot;</span><span class="hl std">,</span><span class="hl kwc">level</span><span class="hl std">=</span><span class="hl num">1</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">croatia_dem</span><span class="hl kwb">=</span> <span class="hl kwd">getData</span><span class="hl std">(</span><span class="hl str">&quot;alt&quot;</span><span class="hl std">,</span> <span class="hl kwc">country</span><span class="hl std">=</span><span class="hl str">&quot;Croatia&quot;</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">croatia</span><span class="hl opt">$</span><span class="hl std">mean_alt</span> <span class="hl kwb">=</span> <span class="hl kwd">extract</span><span class="hl std">(croatia_dem, croatia,</span> <span class="hl kwc">fun</span><span class="hl std">=mean,</span> <span class="hl kwc">na.rm</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)[,</span><span class="hl num">1</span><span class="hl std">]</span>
+<span class="hl std">&gt; </span><span class="hl kwd">spplot</span><span class="hl std">(croatia,</span><span class="hl str">&quot;mean_alt&quot;</span><span class="hl std">)</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/rasterbonus-1.png" title="plot of chunk rasterbonus" alt="plot of chunk rasterbonus" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1>The <code>ggplot2</code> package</h1>
+<h2>A different type of mapping...</h2>
+<img class="mainpic" src="images/ggplotmapping.png" />
+<div class="chunk" id="ggplot1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">ggplot</span><span class="hl std">(cali_data,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=lonWGS84,</span> <span class="hl kwc">y</span><span class="hl std">=latWGS84,</span> <span class="hl kwc">col</span><span class="hl std">=precip_mm))</span> <span class="hl opt">+</span> <span class="hl kwd">geom_point</span><span class="hl std">()</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/ggplot1-1.png" title="plot of chunk ggplot1" alt="plot of chunk ggplot1" class="plot" /></div><div class="rcode">
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">levels</span><span class="hl std">(cali_data</span><span class="hl opt">$</span><span class="hl std">precip_type)</span> <span class="hl kwb">=</span> <span class="hl kwd">substr</span><span class="hl std">(</span><span class="hl kwd">levels</span><span class="hl std">(cali_data</span><span class="hl opt">$</span><span class="hl std">precip_type),</span><span class="hl num">1</span><span class="hl std">,</span><span class="hl num">13</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl kwd">ggplot</span><span class="hl std">(cali_data,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=lonWGS84,</span> <span class="hl kwc">y</span><span class="hl std">=latWGS84,</span> <span class="hl kwc">col</span><span class="hl std">=precip_type))</span> <span class="hl opt">+</span> <span class="hl kwd">geom_point</span><span class="hl std">()</span> <span class="hl opt">+</span> <span class="hl kwd">coord_fixed</span><span class="hl std">()</span>
+</pre></div>
+</div><div class="rimage default"><img src="figure/ggplot1-2.png" title="plot of chunk ggplot1" alt="plot of chunk ggplot1" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1>OSM backgrounds</h1>
+<h2>Waaay back</h2>
+<img class="mainpic" src="images/webmaps.png" />
+<ul>
+<li>Used <code>OpenLayers</code> web mapping system</li>
+<li>Used OpenStreetMap Background Layers</li>
+<li>Points, Lines, Polys, Rasters</li>
+<li>Nobody used it</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1><code>ggmap</code></h1>
+<div class="chunk" id="ggmaptime"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl kwd">ggmap</span><span class="hl std">(</span><span class="hl kwd">get_map</span><span class="hl std">(</span><span class="hl str">&quot;Croatia&quot;</span><span class="hl std">,</span> <span class="hl kwc">zoom</span><span class="hl std">=</span><span class="hl num">6</span><span class="hl std">))</span> <span class="hl opt">+</span> <span class="hl kwd">geom_point</span><span class="hl std">(</span><span class="hl kwc">data</span><span class="hl std">=cali_data,</span> <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span><span class="hl std">=lonWGS84,</span> <span class="hl kwc">y</span><span class="hl std">=latWGS84))</span>
+</pre></div>
+<div class="message"><pre class="knitr r">Map from URL : http://maps.googleapis.com/maps/api/staticmap?center=Croatia&amp;zoom=6&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;sensor=false
+</pre></div>
+</div><div class="rimage default"><img src="figure/ggmaptime-1.png" title="plot of chunk ggmaptime" alt="plot of chunk ggmaptime" class="plot" /></div></div>
 </div>
 
 <div class="slide">
 <h1>More <em>neo-geography</em></h1>
 <!-- geoJSON? web APIs? -->
-</div>
-
-<div class="slide">
-<h1>KML and Google Earth</h1>
+<h2>A whole bunch of things</h2>
+<ul>
+<li>Web Mapping</li>
+<li>VGI</li>
+<li>APIs</li>
+<li>GeoJSON</li>
+<li>KML and Google Earth</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>OpenStreetMap data</h1>
+<ul>
+<li>The <code>osmar</code> package</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>To the web!</h1>
 <h2>OpenLayers and Leaflet</h2>
+<ul>
+<li>The <code>leaflet</code> package</li>
+<li>The <code>leafletR</code> package</li>
+<li>Tim's web mapping package as seen yesterday</li>
 </div>
 
 
 <div class="slide">
+<h1>Data Conversion</h1>
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">raster</span><span class="hl opt">::</span><span class="hl kwd">shapefile</span><span class="hl std">(cali,</span> <span class="hl kwc">filename</span><span class="hl std">=</span><span class="hl str">&quot;./data/cali.shp&quot;</span><span class="hl std">,</span> <span class="hl kwc">overwrite</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+<div class="warning"><pre class="knitr r">Warning in rgdal::writeOGR(x, filename, layer, driver = &quot;ESRI Shapefile&quot;, :
+Field names abbreviated for ESRI Shapefile driver
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">&gt; </span><span class="hl std">raster</span><span class="hl opt">::</span><span class="hl kwd">shapefile</span><span class="hl std">(croatia,</span> <span class="hl kwc">filename</span><span class="hl std">=</span><span class="hl str">&quot;./data/croatia.shp&quot;</span><span class="hl std">,</span> <span class="hl kwc">overwrite</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">raster</span><span class="hl opt">::</span><span class="hl kwd">writeRaster</span><span class="hl std">(rsmooth,</span> <span class="hl kwc">filename</span><span class="hl std">=</span><span class="hl str">&quot;./data/rsmooth.tif&quot;</span><span class="hl std">,</span> <span class="hl kwc">overwrite</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+<span class="hl std">&gt; </span><span class="hl std">raster</span><span class="hl opt">::</span><span class="hl kwd">writeRaster</span><span class="hl std">(croatia_dem,</span> <span class="hl kwc">filename</span><span class="hl std">=</span><span class="hl str">&quot;./data/croatia_dem.tif&quot;</span><span class="hl std">,</span> <span class="hl kwc">overwrite</span><span class="hl std">=</span><span class="hl num">TRUE</span><span class="hl std">)</span>
+</pre></div>
+</div></div>
+</div>
+
+<div class="slide">
 <h1>QGIS outline</h1>
+<ul>
+<li>A user friendly desktop GIS</li>
+<li>Open source cross-platform alternative to expensive proprietary systems</li>
+</ul>
 </div>
 
 <div class="slide">
 <h1>QGIS data</h1>
 <h2>Vector</h2>
+<ul>
+<li>All the OGR sources</li>
+<li>CSV files</li>
+</ul>
 <h2>Raster</h2>
+<ul>
+<li>All the GDAL sources</li>
+</ul>
 <h2>Database</h2>
+<ul>
+<li>PostGIS servers</li>
+<li>SpatiaLite files</li>
+<li>Oracle Spatial (I think)</li>
+</ul>
 <h2>Web Services</h2>
+<ul>
+<li>WMS</li>
+<li>WFC</li>
+<li>etc</li>
+</ul>
 </div>
 
 <div class="slide">
